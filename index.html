@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Root & Bloom — Your Pregnancy Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">Root <em>&</em> Bloom</div>
+  <div id="premiumBadge" class="premium-badge hidden">✦ Premium</div>
+</header>
+
+<main>
+
+  <!-- WEEK TRACKER -->
+  <section class="card hero-card">
+    <h1>Where are you today?</h1>
+    <p class="muted">Tell us the first day of your last period, and we'll do the rest.</p>
+    <div class="row">
+      <input type="date" id="lmpDate">
+      <button id="calcBtn" class="btn-primary">Calculate</button>
+    </div>
+    <div id="weekResult" class="week-result hidden">
+      <div class="ring-visual">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="90" fill="none" stroke="#E4DFD2" stroke-width="10"/>
+          <circle id="progressRing" cx="100" cy="100" r="90" fill="none" stroke="#7C9473" stroke-width="10" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+        </svg>
+        <div class="ring-center">
+          <span id="weekNumber">0</span>
+          <small>weeks</small>
+        </div>
+      </div>
+      <div class="week-details">
+        <p id="sizeCompare" class="size-compare"></p>
+        <p id="trimester" class="muted"></p>
+        <p id="dueDate" class="muted"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEEKLY TIP -->
+  <section class="card tip-card hidden" id="tipCard">
+    <h2>✦ This week's tip</h2>
+    <p id="tipText" class="tip-text"></p>
+  </section>
+
+  <!-- SYMPTOM LOG -->
+  <section class="card">
+    <h2>How are you feeling today?</h2>
+    <div class="mood-row" id="moodRow">
+      <button class="mood-btn" data-mood="😊">😊</button>
+      <button class="mood-btn" data-mood="😴">😴</button>
+      <button class="mood-btn" data-mood="🤢">🤢</button>
+      <button class="mood-btn" data-mood="😣">😣</button>
+      <button class="mood-btn" data-mood="😰">😰</button>
+    </div>
+    <textarea id="symptomNote" placeholder="Any symptoms or notes for today? (optional)"></textarea>
+    <button id="logBtn" class="btn-secondary">Save today's entry</button>
+    <div id="logHistory" class="log-history"></div>
+  </section>
+
+  <!-- KICK COUNTER -->
+  <section class="card">
+    <h2>👣 Kick Counter</h2>
+    <p class="muted">Tap each time you feel a kick. We'll track how long it takes to reach 10.</p>
+    <div class="kick-display">
+      <div class="kick-count-wrap">
+        <span id="kickCount">0</span>
+        <small>kicks</small>
+      </div>
+      <div class="kick-timer-wrap">
+        <span id="kickTimer">00:00</span>
+        <small>elapsed</small>
+      </div>
+    </div>
+    <div class="row">
+      <button id="kickTapBtn" class="btn-primary btn-large">Tap for Kick</button>
+    </div>
+    <button id="kickResetBtn" class="btn-secondary hidden">Reset Session</button>
+    <p id="kickDoneMsg" class="kick-done-msg hidden"></p>
+    <div id="kickHistory" class="log-history"></div>
+  </section>
+
+  <!-- WATER TRACKER -->
+  <section class="card">
+    <h2>💧 Water Intake</h2>
+    <p class="muted">Aim for 8 glasses a day. Tap a drop to log one.</p>
+    <div class="water-row" id="waterRow"></div>
+    <p class="muted" id="waterStatus" style="margin-top:10px;"></p>
+    <button id="waterResetBtn" class="btn-secondary">Reset today</button>
+  </section>
+
+  <!-- BABY SIZE GUESS GAME -->
+  <section class="card game-card">
+    <div class="ai-header">
+      <h2>🎯 Guess the Size</h2>
+      <span class="chat-counter" id="gameScore">Score: 0</span>
+    </div>
+    <p class="muted">Test how well you know your baby's growth journey.</p>
+
+    <div id="gameQuestion" class="game-question">
+      <p class="game-prompt">At <strong>week <span id="gameWeek">--</span></strong>, your baby is about the size of a...</p>
+      <div id="gameOptions" class="game-options"></div>
+      <p id="gameFeedback" class="game-feedback hidden"></p>
+      <button id="gameNextBtn" class="btn-secondary hidden">Next Question →</button>
+    </div>
+
+    <div class="game-stats">
+      <span>🔥 Streak: <strong id="gameStreak">0</strong></span>
+      <span>🏆 Best: <strong id="gameBest">0</strong></span>
+    </div>
+  </section>
+
+  <!-- AI ASSISTANT -->
+
+  <section class="card ai-card">
+    <div class="ai-header">
+      <h2>Ask anything</h2>
+      <span id="chatCounter" class="chat-counter"></span>
+    </div>
+    <p class="muted">Nutrition, symptoms, appointment prep — ask your pregnancy questions anytime.</p>
+    <div id="chatWindow" class="chat-window"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Type your question...">
+      <button id="sendBtn" class="btn-primary">Send</button>
+    </div>
+    <p id="chatLockMsg" class="lock-msg hidden">You've used today's free questions. Unlock Premium below for unlimited access.</p>
+  </section>
+
+  <!-- HOSPITAL BAG CHECKLIST -->
+  <section class="card">
+    <h2>🎒 Hospital Bag Checklist</h2>
+    <p class="muted">Pack ahead of time. Your progress is saved automatically.</p>
+    <div class="checklist-progress-wrap">
+      <div class="checklist-progress-bar"><div id="checklistProgressFill" class="checklist-progress-fill"></div></div>
+      <span id="checklistProgressText" class="checklist-progress-text"></span>
+    </div>
+    <div id="checklistItems" class="checklist-items"></div>
+  </section>
+
+  <!-- PREMIUM UNLOCK -->
+  <section class="card premium-card" id="premiumSection">
+    <h2>Unlock Premium</h2>
+    <p class="muted">Unlimited AI questions, every day, for the rest of your pregnancy.</p>
+    <div class="price-row">
+      <span class="price">₹99</span>
+      <span class="muted">one-time</span>
+    </div>
+    <button id="payBtn" class="btn-primary btn-large">Pay & Unlock Instantly</button>
+    <p class="fine-print">Secure payment via Razorpay. Unlocks immediately — no waiting.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p class="muted">Root & Bloom is a companion tool, not a substitute for medical advice. Always consult your doctor.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
