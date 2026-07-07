@@ -372,54 +372,6 @@ document.getElementById('chatInput').addEventListener('keypress', e => {
   if(e.key === 'Enter') sendMessage();
 });
 
-// ---------- PAYMENT (Razorpay) ----------
-document.getElementById('payBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('payBtn');
-  btn.disabled = true;
-  btn.textContent = 'Preparing payment...';
-
-  try{
-    const orderRes = await fetch('/.netlify/functions/create-order', { method: 'POST' });
-    const order = await orderRes.json();
-
-    if(!order.id){
-      throw new Error('Order creation failed');
-    }
-
-    const options = {
-      key: order.key_id,
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Root & Bloom',
-      description: 'Premium Unlock — Unlimited AI Questions',
-      order_id: order.id,
-      handler: async function(response){
-        const verifyRes = await fetch('/.netlify/functions/verify-payment', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(response)
-        });
-        const verifyData = await verifyRes.json();
-        if(verifyData.verified){
-          store.set('rb_premium', true);
-          refreshPremiumUI();
-          alert('Payment successful! Premium unlocked 🎉');
-        } else {
-          alert('Payment could not be verified. Please contact support.');
-        }
-      },
-      theme: { color: '#7C9473' }
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
-  } catch(err){
-    alert('Could not start payment. Please try again in a moment.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Pay & Unlock Instantly';
-  }
-});
 
 // ---------- HOSPITAL BAG CHECKLIST ----------
 const checklistDefaults = [
