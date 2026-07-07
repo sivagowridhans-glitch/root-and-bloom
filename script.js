@@ -473,3 +473,6 @@ function renderChecklist(){
 renderChecklist();
 
 refreshPremiumUI();
+function payWithGpay(amount) {
+  window.location.href = `upi://pay?pa=sivagowridhans@okaxis&pn=SivaGowriDhan&am=${amount}&cu=INR&tn=RootAndBloom`;
+}
