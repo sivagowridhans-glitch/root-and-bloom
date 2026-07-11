@@ -70,3 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const moodBtn = document.getElementById("moodJumpBtn");
+  if (moodBtn) {
+    moodBtn.addEventListener("click", () => {
+      const moodSection = document.getElementById("moodRow");
+      if (moodSection) moodSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+});
