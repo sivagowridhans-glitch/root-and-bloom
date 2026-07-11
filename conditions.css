@@ -1,0 +1,54 @@
+.condition-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.condition-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 14px;
+  border: 1px solid #E4DFD2;
+  border-radius: 12px;
+  background: #FAF8F3;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.condition-btn:hover {
+  border-color: #7C9473;
+  background: #F0EFE6;
+}
+
+.condition-btn.active {
+  background: #7C9473;
+  border-color: #7C9473;
+  color: #fff;
+}
+
+.condition-detail {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: #F5F3EC;
+  border-radius: 14px;
+  border: 1px solid #E4DFD2;
+}
+
+.condition-detail h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+}
+
+.condition-detail ul {
+  font-size: 14px;
+  color: #3A3A34;
+}
+
+.condition-detail.hidden {
+  display: none;
+}
