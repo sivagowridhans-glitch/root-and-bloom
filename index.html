@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="premium-theme.css">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
@@ -64,6 +65,18 @@
     <textarea id="symptomNote" placeholder="Any symptoms or notes for today? (optional)"></textarea>
     <button id="logBtn" class="btn-secondary">Save today's entry</button>
     <div id="logHistory" class="log-history"></div>
+  </section>
+
+  <!-- PREGNANCY CONDITION SYMPTOM CHECKER -->
+  <section class="card">
+    <h2>⚕️ Know the Warning Signs</h2>
+    <p class="muted">Tap a condition to see common symptoms. This is general information, not a diagnosis.</p>
+    <div class="condition-row" id="conditionRow">
+      <button class="condition-btn" data-condition="anemia">🩸 Anemia</button>
+      <button class="condition-btn" data-condition="bp">💢 High BP</button>
+      <button class="condition-btn" data-condition="gd">🧪 Gestational Diabetes</button>
+    </div>
+    <div id="conditionDetail" class="condition-detail hidden"></div>
   </section>
 
   <!-- KICK COUNTER -->
@@ -164,5 +177,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="conditions.js"></script>
 </body>
 </html>
