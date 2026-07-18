@@ -9,6 +9,28 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="premium-theme.css">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+.rb-affiliate{--sage:#4F6F52;--sage-deep:#33482F;--rose:#C77B85;--ivory:#FBF8F3;--ivory-deep:#F3EEE3;--ink:#2E2A26;--ink-soft:#6b6459;max-width:920px;margin:40px auto;padding:0 16px;color:var(--ink);}
+.rb-affiliate .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.rb-affiliate .eyebrow::before{content:"";width:14px;height:14px;border-radius:50%;border:2px solid var(--sage);display:inline-block;}
+.rb-affiliate h2{font-family:'Fraunces',serif;font-weight:500;font-size:30px;margin:0 0 6px;color:var(--sage-deep);}
+.rb-affiliate .sub{color:var(--ink-soft);font-size:14px;max-width:460px;margin:0 0 24px;}
+.rb-rings{display:flex;border-radius:999px;background:var(--ivory-deep);padding:5px;margin-bottom:28px;position:relative;}
+.rb-ring-btn{flex:1;border:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:12px 6px;border-radius:999px;cursor:pointer;color:var(--ink-soft);display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;z-index:2;transition:color .25s ease;}
+.rb-ring-btn.active{color:#fff;}
+.rb-thumb{position:absolute;top:5px;bottom:5px;width:calc(33.333% - 3.33px);background:var(--sage);border-radius:999px;transition:transform .35s cubic-bezier(.65,0,.35,1);z-index:1;}
+.rb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.rb-card{background:#fff;border:1px solid var(--ivory-deep);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.rb-card .badge{align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--sage);background:rgba(79,111,82,.09);padding:3px 8px;border-radius:6px;}
+.rb-card .name{font-family:'Fraunces',serif;font-size:16px;font-weight:500;}
+.rb-card .why{font-size:13px;color:var(--ink-soft);line-height:1.45;flex-grow:1;}
+.rb-card .row{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.rb-card .price{font-family:'IBM Plex Mono',monospace;font-size:13px;}
+.rb-buy{text-decoration:none;font-weight:600;font-size:13px;color:#fff;background:var(--rose);padding:9px 16px;border-radius:999px;transition:background .2s ease;}
+.rb-buy:hover{background:#a8606b;}
+.rb-disclosure{margin-top:22px;font-size:12px;color:var(--ink-soft);line-height:1.6;border-top:1px solid var(--ivory-deep);padding-top:14px;}
+</style>
 </head>
 <body>
 
@@ -189,5 +211,71 @@
 
 <script src="script.js"></script>
 <script src="conditions.js"></script>
+<section class="rb-affiliate">
+  <div class="eyebrow">Curated for you</div>
+  <h2>Growing Essentials</h2>
+  <p class="sub">Picked for where you are right now — switch trimesters to see what's useful today.</p>
+
+  <div class="rb-rings" id="rbRings">
+    <div class="rb-thumb" id="rbThumb"></div>
+    <button class="rb-ring-btn active" data-i="0">🌱 First Trimester</button>
+    <button class="rb-ring-btn" data-i="1">🌿 Second Trimester</button>
+    <button class="rb-ring-btn" data-i="2">🌸 Third Trimester</button>
+  </div>
+
+  <div class="rb-grid" id="rbGrid"></div>
+
+  <div class="rb-disclosure">
+    <strong>Root & Bloom</strong> is a participant in the Amazon Associates Program. As an Amazon Associate, we earn from qualifying purchases — at no extra cost to you. Suggestions are general and not medical advice; always check with your doctor before starting any new product or supplement.
+  </div>
+</section>
+
+<script>
+(function(){
+  const STAGES = [
+    { items:[
+      {badge:"Wellness", name:"Prenatal Vitamins", why:"Folic acid & iron support for early development.", price:"₹499", link:"https://www.amazon.in/s?k=prenatal+vitamins&tag=rootbloom21-21"},
+      {badge:"Comfort", name:"Ginger Chews", why:"A gentle, natural way to ease morning nausea.", price:"₹299", link:"https://www.amazon.in/s?k=ginger+chews+pregnancy&tag=rootbloom21-21"},
+      {badge:"Rest", name:"Wedge Pillow", why:"Extra support for the new ways you're sleeping.", price:"₹799", link:"https://www.amazon.in/s?k=pregnancy+wedge+pillow&tag=rootbloom21-21"}
+    ]},
+    { items:[
+      {badge:"Comfort", name:"Maternity Belly Band", why:"Gentle support as your bump starts to grow.", price:"₹649", link:"https://www.amazon.in/s?k=maternity+belly+band&tag=rootbloom21-21"},
+      {badge:"Skin", name:"Stretch Mark Oil", why:"Keeps skin nourished through rapid growth.", price:"₹399", link:"https://www.amazon.in/s?k=stretch+mark+oil&tag=rootbloom21-21"},
+      {badge:"Tracking", name:"Doppler Heart Monitor", why:"Hear your baby's heartbeat at home, between visits.", price:"₹1,999", link:"https://www.amazon.in/s?k=fetal+doppler&tag=rootbloom21-21"}
+    ]},
+    { items:[
+      {badge:"Hospital Bag", name:"Nursing Bra Set", why:"Comfortable, ready for after your baby arrives.", price:"₹899", link:"https://www.amazon.in/s?k=nursing+bra&tag=rootbloom21-21"},
+      {badge:"Hospital Bag", name:"Going-Home Outfit", why:"Soft, size-adjustable, for baby's first ride home.", price:"₹599", link:"https://www.amazon.in/s?k=newborn+going+home+outfit&tag=rootbloom21-21"},
+      {badge:"Support", name:"Maternity Pillow", why:"Full-body support for the final stretch of sleep.", price:"₹1,499", link:"https://www.amazon.in/s?k=maternity+pillow&tag=rootbloom21-21"}
+    ]}
+  ];
+  const grid = document.getElementById('rbGrid');
+  const thumb = document.getElementById('rbThumb');
+  const btns = document.querySelectorAll('.rb-ring-btn');
+
+  function render(i){
+    grid.innerHTML = "";
+    STAGES[i].items.forEach(it=>{
+      const c = document.createElement('div');
+      c.className = 'rb-card';
+      c.innerHTML = `<span class="badge">${it.badge}</span>
+        <div class="name">${it.name}</div>
+        <div class="why">${it.why}</div>
+        <div class="row"><span class="price">from ${it.price}</span>
+        <a class="rb-buy" href="${it.link}" target="_blank" rel="noopener sponsored">View on Amazon</a></div>`;
+      grid.appendChild(c);
+    });
+  }
+  btns.forEach((b,i)=>{
+    b.addEventListener('click', ()=>{
+      btns.forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      thumb.style.transform = `translateX(${i*100}%)`;
+      render(i);
+    });
+  });
+  render(0);
+})();
+</script>  
 </body>
 </html>
